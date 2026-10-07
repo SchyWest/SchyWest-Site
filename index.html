@@ -370,6 +370,49 @@ body.previewing .ed-fab{display:none}
 .ed-confirm{display:flex;gap:6px;align-items:center;font-size:12px;color:#ff9a9a}
 
 .calm .name .ch,.calm .tag,.calm .role,.calm .socials a,.calm .page,.calm .hero .photo,.ed-fab.seen{animation:none!important}
+/* ---------- DESKTOP (container width ≥ 980px): sticky identity panel + two-column block grid ---------- */
+#app{container-type:inline-size}
+.side,.col{display:contents}
+@container (min-width:980px){
+  #app .page{max-width:1380px;margin:0 auto;display:grid;grid-template-columns:minmax(340px,.78fr) 1.5fr;gap:30px;padding:28px 32px 0;background:transparent;box-shadow:none;border-radius:0;min-height:100vh;align-items:start;overflow:visible}
+  #app .side{display:flex;flex-direction:column;position:sticky;top:28px;height:calc(100vh - 56px);min-height:560px;max-height:980px;border-radius:30px;overflow:hidden;background:var(--bg);box-shadow:0 0 0 1px var(--line),0 40px 120px rgba(0,0,0,.45)}
+  #app .hero,#app .hero.short{flex:1;height:auto;min-height:0}
+  #app .hero-inner{padding:0 28px 22px}
+  #app .name{font-size:clamp(54px,6.4cqi,108px);margin-top:16px}
+  #app .role{font-size:16px}
+  #app .socials{padding:14px 20px 22px;gap:4px}
+  #app .socials.left{justify-content:flex-start;padding-left:16px}
+  #app .col{display:block;min-width:0;padding-bottom:28px}
+  #app .stack{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:0;align-items:stretch}
+  #app .blk{min-width:0}
+  #app .blk.wide{grid-column:1/-1}
+  #app .blk>.card{flex:1}
+  #app .label{margin-top:2px}
+  #app .ticker{margin:0;border:1px solid var(--line);border-radius:999px;padding:13px 0}
+  #app .ticker span{font-size:17px}
+  #app .feature{grid-template-columns:210px 1fr;padding:24px;gap:28px}
+  #app .feature .disc-wrap{width:210px;height:210px}
+  #app .feature .title{font-size:clamp(28px,3.2cqi,44px)}
+  #app .feature .sub{font-size:14px}
+  #app .feature.playing .vinyl{transform:translateX(92px)}
+  #app .feature .platforms{grid-column:2}
+  #app .rail{margin:0;padding:6px 0 10px;-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
+  #app .disc-item{flex-basis:calc(25% - 11px)}
+  #app .shelf{margin:0;padding:22px 6px 30px}
+  #app .cover{flex-basis:140px;height:196px;margin-right:-40px}
+  #app .cover:hover,#app .cover:focus-visible{margin-right:8px}
+  #app .orbit{width:min(100%,440px)}
+  #app .wall{height:420px}
+  #app .blk.wide .wall{height:420px;grid-template-columns:repeat(2,1fr)}
+  #app .studio{display:flex;flex-direction:column;justify-content:space-between}
+  #app .expand{height:320px}
+  #app footer{padding:30px 4px 6px}
+}
+/* pointer glow on cards (mouse/trackpad only) */
+@media (hover:hover) and (pointer:fine){
+  .card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(420px circle at var(--gx,-999px) var(--gy,-999px),color-mix(in srgb,var(--accent) 11%,transparent),transparent 60%);opacity:0;transition:opacity .35s}
+  .card:hover::after{opacity:1}
+}
 @media (max-width:380px){.feature{grid-template-columns:92px 1fr}.disc-wrap{width:92px;height:92px}}
 @media (prefers-reduced-motion:reduce){.page *,.page *::before,.page *::after,.field i{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}.rv.pre{opacity:1!important;transform:none!important;filter:none!important}}
 </style>
@@ -514,10 +557,14 @@ function render(){
   const nameHtml = String(p.name || "").split(/\s+/).filter(Boolean).map(w => `<span class="w" aria-hidden="true">${[...w].map(c => `<span class="ch" style="--i:${ci++};--r:${(ci % 2 ? 1 : -1) * (6 + ci % 4 * 3)}deg">${esc(c)}</span>`).join("")}</span>`).join("");
   const socials = S.socials.filter(s => s.url).map((s, j) => ext(s.url, I[s.p] || I.web, "", PLATFORMS[s.p] || "Link", `style="--i:${j}"`)).join("");
   const heroCls = ["hero", p.align === "left" ? "left" : "", p.short ? "short" : "", p.photo && p.hero === "photo" ? "photo-mode" : ""].join(" ");
-  const blocks = S.blocks.filter(b => !b.hidden && R[b.type]).map(b => `<section class="blk" data-id="${esc(b.id)}" data-type="${b.type}">${R[b.type](b)}</section>`).join("");
+  // desktop pairing: wide types take a full row; a single block left without a partner also goes full width
+  const FULL = new Set(["ticker","featured","catalog","shelf","expand"]), vis = S.blocks.filter(b => !b.hidden && R[b.type]), wide = new Set(); let pend = null;
+  vis.forEach(b => { if (FULL.has(b.type)) { if (pend) wide.add(pend); pend = null; wide.add(b.id); } else if (pend) pend = null; else pend = b.id; }); if (pend) wide.add(pend);
+  const blocks = vis.map(b => `<section class="blk${wide.has(b.id) ? " wide" : ""}" data-id="${esc(b.id)}" data-type="${b.type}">${R[b.type](b)}</section>`).join("");
   $("#app").innerHTML = `
     <div class="field" aria-hidden="true"><i></i><i></i><i></i></div>
     <main class="page">
+      <div class="side">
       <header class="${heroCls}" id="hero">
         <canvas aria-hidden="true"></canvas>
         ${p.photo && p.hero === "photo" ? `<div class="photo" style="background-image:url('${p.photo}')"></div>` : ""}
@@ -527,9 +574,12 @@ function render(){
           <p class="role"><span class="rt">${esc((p.roles || [])[0] || "")}</span>${(p.roles || []).length > 1 ? '<span class="caret"></span>' : ""}</p>
         </div>
       </header>
-      ${socials ? `<nav class="socials" aria-label="Social links">${socials}</nav>` : ""}
+      ${socials ? `<nav class="socials${p.align === "left" ? " left" : ""}" aria-label="Social links">${socials}</nav>` : ""}
+      </div>
+      <div class="col">
       <div class="stack">${blocks}</div>
       <footer><span>© ${new Date().getFullYear()} ${esc(String(p.name || "").toLowerCase())}</span><button class="share" data-k="share">${I.link}Copy link</button></footer>
+      </div>
     </main>`;
   mount();
 }
@@ -608,6 +658,7 @@ function mountBlocks(){
       const beat = Math.pow(Math.max(0, Math.sin(t * .21 * (S.motion.speed || 1))), 6) * 28, base = 48 + Math.sin(t * .05) * 8;
       const nl = Math.min(97, base + beat + Math.random() * 12), nr = Math.min(97, base + beat * .9 + Math.random() * 12);
       el = nl > el ? nl : el - 2.2; er = nr > er ? nr : er - 2.2; l.style.height = el + "%"; r.style.height = er + "%"; }, mt); });
+  if (finePtr()) $$("#app .card").forEach(c => c.addEventListener("pointermove", e => { const r = c.getBoundingClientRect(); c.style.setProperty("--gx", (e.clientX - r.left) + "px"); c.style.setProperty("--gy", (e.clientY - r.top) + "px"); }));
   $$(".lnk").forEach(a => a.addEventListener("pointermove", e => { const r = a.getBoundingClientRect(); a.style.setProperty("--mx", (e.clientX - r.left) + "px"); a.style.setProperty("--my", (e.clientY - r.top) + "px"); }));
   const share = $('[data-k="share"]'); share && share.addEventListener("click", () => { const url = location.href.split("#")[0];
     if (navigator.clipboard?.writeText) navigator.clipboard.writeText(url).then(() => toast("Link copied"), () => toast(url)); else toast(url); });
