@@ -673,8 +673,11 @@ function mountBlocks(){
     if (nm && !nm.value.trim()) { msg.textContent = "Enter your first name."; msg.classList.add("err"); nm.focus(); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { msg.textContent = "Enter a valid email."; msg.classList.add("err"); inp.focus(); return; }
     btn.disabled = true; msg.textContent = "Joining…";
-    try { const r = await fetch(f.action, {method: "POST", body: new FormData(f), headers: {Accept: "application/json"}}); if (!r.ok) throw new Error("http");
-      f.reset(); msg.textContent = "You're in. Check your email to confirm."; }
+    try { const r = await fetch(f.action, {method: "POST", body: new FormData(f), headers: {Accept: "application/json"}}); let j = null; try { j = await r.json(); } catch (e2) {}
+      if (!r.ok || !j) throw new TypeError("no-json");
+      if (j.status === "success") { f.reset(); msg.textContent = "You're in. Check your email (and spam) to confirm."; }
+      else if (j.redirect_url || j.status === "quarantined") { f.submit(); return; }
+      else { msg.textContent = (j.errors && j.errors.messages && j.errors.messages[0]) || "Couldn't sign you up. Try again."; msg.classList.add("err"); } }
     catch (err) { if (err instanceof TypeError) { f.submit(); return; } msg.textContent = "Couldn't sign you up. Try again."; msg.classList.add("err"); }
     btn.disabled = false; }));
   $$('[data-k="countdown"]').forEach(card => { const target = new Date(card.dataset.date).getTime(); const els = $$(".clock b", card); if (isNaN(target)) return;
