@@ -679,7 +679,7 @@ function mountBlocks(){
     a.addEventListener("pointerenter", warm); a.addEventListener("touchstart", warm, {passive: true}); a.addEventListener("focus", warm);
     let going = false, upT = 0; const release = () => { if (!going) a.classList.remove("pressed"); };
     a.addEventListener("pointerdown", () => { clearTimeout(upT); a.classList.add("pressed"); });
-    a.addEventListener("pointercancel", release); a.addEventListener("pointerleave", release);
+    a.addEventListener("pointercancel", release); a.addEventListener("pointerleave", e => { if (e.pointerType === "mouse") release(); });
     a.addEventListener("pointerup", () => { clearTimeout(upT); upT = setTimeout(release, 450); });
     a.addEventListener("click", e => { if (e.metaKey || e.ctrlKey || e.shiftKey || e.button) return; e.preventDefault(); if (going) return; going = true; clearTimeout(upT); a.classList.add("pressed"); try { navigator.vibrate && navigator.vibrate(12); } catch (e2) {}
       setTimeout(() => { location.href = a.href; }, 140); });
