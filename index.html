@@ -23,8 +23,10 @@
 <meta name="twitter:title" content="The Official Website of Everything Schy West">
 <meta name="twitter:description" content="Schy West (pronounced “Sky West”, also SchyWest) is a recording artist, producer and sound engineer. Stream his music, watch videos and book studio sessions.">
 <link rel="apple-touch-icon" href="https://schywest.com/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://schywest.com/favicon.png">
 <meta name="robots" content="index,follow">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"MusicGroup","name":"Schy West","description":"Schy West (pronounced “Sky West”, also SchyWest) is a recording artist, producer and sound engineer. Stream his music, watch videos and book studio sessions.","alternateName":["SchyWest","Schy","Sky West","Shy West","Skye West","Schy West Music"],"url":"https://schywest.com/","image":"https://schywest.com/og.jpg","genre":["Hip-Hop/Rap"],"sameAs":["https://music.apple.com/us/artist/schy-west/1369007281","https://open.spotify.com/artist/0AkljzAdRF11kgQmk9NIWv","https://www.youtube.com/@schywest","https://instagram.com/SchyWest","https://www.tiktok.com/@schywest","https://soundcloud.com/schywest"],"album":[{"@type":"MusicAlbum","name":"Schys The Limit","datePublished":"2025","url":"https://music.apple.com/us/album/schys-the-limit/6819987716"},{"@type":"MusicAlbum","name":"71 South Saga","datePublished":"2024","url":"https://music.apple.com/us/album/71-south-saga/6817795326"},{"@type":"MusicAlbum","name":"Cause & Effect","datePublished":"2022","url":"https://music.apple.com/us/album/cause-effect/1827905816"},{"@type":"MusicAlbum","name":"SINKING","datePublished":"2021","url":"https://music.apple.com/us/album/sinking/1822234978"},{"@type":"MusicAlbum","name":"Good Beats & Bad Intentions","datePublished":"2020","url":"https://music.apple.com/us/album/good-beats-bad-intentions/1515333274"},{"@type":"MusicAlbum","name":"Mixed Emotions","datePublished":"2019","url":"https://music.apple.com/us/album/mixed-emotions/1470482342"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Schy West","alternateName":["SchyWest","Schy","Sky West","Shy West","Skye West","Schy West Music"],"url":"https://schywest.com/"}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link id="sw-fonts" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&amp;family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
@@ -1069,9 +1071,10 @@ function seoTags(){
   t += `\n<meta property="og:site_name" content="${esc(p.name)}">`;
   if (o.image) t += `\n<meta property="og:image" content="${esc(o.image)}">\n<meta property="og:image:type" content="image/jpeg">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta property="og:image:alt" content="${esc(p.name)}">\n<meta name="twitter:image" content="${esc(o.image)}">`;
   t += `\n<meta name="twitter:card" content="${o.image ? "summary_large_image" : "summary"}">\n<meta name="twitter:title" content="${esc(seoInfo().share)}">\n<meta name="twitter:description" content="${esc(seoInfo().desc)}">`;
-  if (o.url) t += `\n<link rel="apple-touch-icon" href="${esc(new URL("apple-touch-icon.png", o.url).href)}">`;
+  if (o.url) t += `\n<link rel="apple-touch-icon" href="${esc(new URL("apple-touch-icon.png", o.url).href)}">\n<link rel="icon" type="image/png" sizes="192x192" href="${esc(new URL("favicon.png", o.url).href)}">`;
   t += `\n<meta name="robots" content="index,follow">`;
-  return t + `\n<script type="application/ld+json">${seoLd()}<\/script>`;
+  const site = JSON.stringify({"@context": "https://schema.org", "@type": "WebSite", name: p.name, alternateName: o.alt || [], url: o.url || undefined}).replace(/</g, "\\u003c");
+  return t + `\n<script type="application/ld+json">${seoLd()}<\/script>\n<script type="application/ld+json">${site}<\/script>`;
 }
 function seoNoscript(){
   const {p, desc} = seoInfo();
