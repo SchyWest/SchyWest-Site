@@ -89,7 +89,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .name{margin:14px 0 4px;font:800 clamp(56px,17vw,84px)/.86 var(--f-display);letter-spacing:-.055em;display:flex;justify-content:center;flex-wrap:wrap;column-gap:.18em;min-height:.9em}
 .case-lower .name{text-transform:lowercase}.case-upper .name{text-transform:uppercase;letter-spacing:-.03em}
 .name .w{display:inline-flex}
-.name.has-logo{min-height:0;margin:6px 0 0}.name-logo{display:block;width:min(100%,430px);height:auto;filter:drop-shadow(0 6px 22px rgba(0,0,0,.65));animation:rise 1s .3s var(--ease) both}
+.name.has-logo{min-height:0;margin:6px 0 0}@media (max-width:899px){.name-logo{width:min(74%,300px)!important}}.name-logo{display:block;width:min(100%,430px);height:auto;filter:drop-shadow(0 6px 22px rgba(0,0,0,.65));animation:rise 1s .3s var(--ease) both}
 .name .ch{display:inline-block;background:linear-gradient(180deg,var(--fg) 10%,var(--accent) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.06em}
 .intro-blur .name .ch{animation:chBlur 1s var(--ease) both;animation-delay:calc(var(--i) * 55ms + .25s)}
 @keyframes chBlur{from{transform:translateY(.45em) rotate(4deg);filter:blur(10px);opacity:0}}
