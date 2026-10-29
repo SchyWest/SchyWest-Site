@@ -9,7 +9,7 @@
 <meta property="og:description" content="Schy West (pronounced “Sky West”, also SchyWest) is a recording artist, producer and sound engineer. Stream his music, watch videos and book studio sessions.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#06080e">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2216%22%20fill%3D%22%2306080e%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2220%22%20fill%3D%22none%22%20stroke%3D%22%23a9d8ff%22%20stroke-width%3D%225%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%225%22%20fill%3D%22%23ffb98a%22%2F%3E%3C%2Fsvg%3E">
+<link rel="icon" href="https://schywest.com/favicon.png">
 <link rel="canonical" href="https://schywest.com/">
 <meta property="og:url" content="https://schywest.com/">
 <meta property="og:site_name" content="Schy West">
@@ -23,7 +23,6 @@
 <meta name="twitter:title" content="The Official Website of Everything Schy West">
 <meta name="twitter:description" content="Schy West (pronounced “Sky West”, also SchyWest) is a recording artist, producer and sound engineer. Stream his music, watch videos and book studio sessions.">
 <link rel="apple-touch-icon" href="https://schywest.com/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="https://schywest.com/favicon.png">
 <meta name="robots" content="index,follow">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"MusicGroup","name":"Schy West","description":"Schy West (pronounced “Sky West”, also SchyWest) is a recording artist, producer and sound engineer. Stream his music, watch videos and book studio sessions.","alternateName":["SchyWest","Schy","Sky West","Shy West","Skye West","Schy West Music","Sky West Music","SchyWest Music"],"url":"https://schywest.com/","image":"https://schywest.com/og.jpg","genre":["Hip-Hop/Rap"],"sameAs":["https://music.apple.com/us/artist/schy-west/1369007281","https://open.spotify.com/artist/0AkljzAdRF11kgQmk9NIWv","https://www.youtube.com/@schywest","https://instagram.com/SchyWest","https://www.tiktok.com/@schywest","https://soundcloud.com/schywest"],"album":[{"@type":"MusicAlbum","name":"Schys The Limit","datePublished":"2025","url":"https://music.apple.com/us/album/schys-the-limit/6819987716"},{"@type":"MusicAlbum","name":"71 South Saga","datePublished":"2024","url":"https://music.apple.com/us/album/71-south-saga/6817795326"},{"@type":"MusicAlbum","name":"Cause & Effect","datePublished":"2022","url":"https://music.apple.com/us/album/cause-effect/1827905816"},{"@type":"MusicAlbum","name":"SINKING","datePublished":"2021","url":"https://music.apple.com/us/album/sinking/1822234978"},{"@type":"MusicAlbum","name":"Good Beats & Bad Intentions","datePublished":"2020","url":"https://music.apple.com/us/album/good-beats-bad-intentions/1515333274"},{"@type":"MusicAlbum","name":"Mixed Emotions","datePublished":"2019","url":"https://music.apple.com/us/album/mixed-emotions/1470482342"}],"foundingLocation":{"@type":"Place","name":"Columbus, Ohio"},"subjectOf":[{"@type":"Article","url":"https://voyageohio.com/interview/rising-stars-meet-schy-west-of-ohio","name":"Rising Stars: Meet Schy West of Ohio","headline":"Rising Stars: Meet Schy West of Ohio","datePublished":"2026-10-29","publisher":{"@type":"Organization","name":"Voyage Ohio"}},{"@type":"ProfilePage","url":"https://hiddengeminterviews.com/profile/schy-west","name":"Schy West","publisher":{"@type":"Organization","name":"Hidden Gem Interviews"}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Schy West","alternateName":["SchyWest","Schy","Sky West","Shy West","Skye West","Schy West Music","Sky West Music","SchyWest Music"],"url":"https://schywest.com/"}</script>
@@ -1076,7 +1075,7 @@ function seoTags(){
   t += `\n<meta property="og:site_name" content="${esc(p.name)}">`;
   if (o.image) t += `\n<meta property="og:image" content="${esc(o.image)}">\n<meta property="og:image:type" content="image/jpeg">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta property="og:image:alt" content="${esc(p.name)}">\n<meta name="twitter:image" content="${esc(o.image)}">`;
   t += `\n<meta name="twitter:card" content="${o.image ? "summary_large_image" : "summary"}">\n<meta name="twitter:title" content="${esc(seoInfo().share)}">\n<meta name="twitter:description" content="${esc(seoInfo().desc)}">`;
-  if (o.url) t += `\n<link rel="apple-touch-icon" href="${esc(new URL("apple-touch-icon.png", o.url).href)}">\n<link rel="icon" type="image/png" sizes="192x192" href="${esc(new URL("favicon.png", o.url).href)}">`;
+  if (o.url) t += `\n<link rel="apple-touch-icon" href="${esc(new URL("apple-touch-icon.png", o.url).href)}">`;
   t += `\n<meta name="robots" content="index,follow">`;
   const site = JSON.stringify({"@context": "https://schema.org", "@type": "WebSite", name: p.name, alternateName: o.alt || [], url: o.url || undefined}).replace(/</g, "\\u003c");
   return t + `\n<script type="application/ld+json">${seoLd()}<\/script>\n<script type="application/ld+json">${site}<\/script>`;
@@ -1096,7 +1095,7 @@ function loaderHtml(){
 function buildDocument(){
   const p = S.profile, data = JSON.stringify(S).replace(/</g, "\\u003c");
   const {title, desc} = seoInfo();
-  return SKELETON_HEAD(title, desc, favicon()) + seoTags()
+  return SKELETON_HEAD(title, desc, (S.seo && S.seo.url) ? esc(new URL("favicon.png", S.seo.url).href) : favicon()) + seoTags()
     + `\n<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link id="sw-fonts" rel="stylesheet" href="${esc(fontsHref(S.theme))}">\n`
     + `<style id="sw-style">${$("#sw-style").textContent}</style>\n</head>\n<body>\n${seoNoscript()}${loaderHtml()}<script type="application/json" id="sw-data">${data}<\/script>\n<script id="sw-app">${$("#sw-app").textContent}<\/script>\n</body>\n</html>\n`;
 }
