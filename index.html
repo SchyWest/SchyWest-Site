@@ -239,7 +239,7 @@ a.xa-btn{text-decoration:none;color:var(--bg)}.textblk.plain.xa-only{display:blo
 .orbit .sat-in{position:absolute;inset:0;border-radius:14px;background:var(--img) center/cover;box-shadow:0 10px 26px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.1);animation:spin calc(var(--dur,30s)/var(--speed)) linear infinite reverse}
 .orbit .ring.r2 .sat-in{animation-direction:normal;animation-duration:calc(var(--dur,30s)*.8/var(--speed))}
 .orbit .core{position:absolute;inset:36%;border-radius:50%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 30%,var(--bg)),var(--bg) 70%);border:1px solid var(--line);box-shadow:0 0 60px color-mix(in srgb,var(--accent) 25%,transparent);background-size:cover;background-position:center;overflow:hidden}
-.orbit .core b{font:800 clamp(16px,5vw,22px)/1 var(--f-display);letter-spacing:-.03em;padding:8px}
+.orbit .core{container-type:inline-size}.orbit .core b{display:block;width:84%;margin:0 auto;font:800 clamp(11px,17cqi,22px)/1.02 var(--f-display);letter-spacing:-.01em;padding:0;overflow-wrap:normal;word-break:keep-all;text-align:center}
 .case-lower .orbit .core b{text-transform:lowercase}
 
 /* ---------- WALL (two-column vertical marquee) ---------- */
