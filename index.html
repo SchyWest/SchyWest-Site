@@ -519,7 +519,7 @@ function applyTheme(){
   b.className = b.className.replace(/\b(intro|rv|cards|case)-\S+/g, "").replace(/\bno-ambient\b/g, "").trim();
   b.classList.add("intro-" + m.intro, "rv-" + m.reveal, "cards-" + t.card, "case-" + t.case);
   if (!m.ambient) b.classList.add("no-ambient");
-  document.title = S.profile.name || "My page";
+  document.title = (S.seo && S.seo.title) || S.profile.name || "My page";
 }
 
 /* ============================== blocks: render ============================== */
